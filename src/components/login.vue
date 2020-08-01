@@ -66,9 +66,9 @@ export default {
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
           {
-            min: 8,
+            min: 6,
             max: 16,
-            message: "用户名长度必须在8到16位之间",
+            message: "用户名长度必须在6到16位之间",
             trigger: "blur",
           },
         ],
@@ -93,7 +93,9 @@ export default {
         this.$message.success("登录成功");
 
         window.sessionStorage.setItem('token',res.data.token)
+
         this.$router.push('/home')
+        
       });
     },
   },
