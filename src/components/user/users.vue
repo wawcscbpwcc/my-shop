@@ -35,17 +35,32 @@
           <template slot-scope="scope">
             <!-- 修改按钮 -->
             <el-tooltip effect="dark" content="修改" placement="top" :enterable="false">
-              <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
+              <el-button
+                type="primary"
+                icon="el-icon-edit"
+                size="mini"
+                @click="showEditDialog(scope.row.id)"
+              ></el-button>
             </el-tooltip>
 
             <!-- 删除按钮 -->
             <el-tooltip effect="dark" content="删除" placement="top" :enterable="false">
-              <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)"></el-button>
+              <el-button
+                type="danger"
+                icon="el-icon-delete"
+                size="mini"
+                @click="removeUserById(scope.row.id)"
+              ></el-button>
             </el-tooltip>
 
             <!-- 分配角色按钮 -->
             <el-tooltip effect="dark" content="分配角色" placement="top" :enterable="false">
-              <el-button type="warning" icon="el-icon-setting" size="mini" @click="showSetRole()"></el-button>
+              <el-button
+                type="warning"
+                icon="el-icon-setting"
+                size="mini"
+                @click="showSetRole(scope.row)"
+              ></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -97,21 +112,26 @@
       width="50%"
       @close="editDialogClosed"
     >
-     <el-form :model="editUserForm" :rules="editUserFormRules" ref="editUserFormRef" lable-width="70px">
-       <el-form-item lable="用户名">
-         <el-input v-model="editUserForm.username" disabled></el-input>
-       </el-form-item>
-       <el-form-item lable="邮箱" prop="email">
-         <el-input v-model="editUserForm.email"></el-input>
-       </el-form-item>
-       <el-form-item lable="手机号" prop="mobile">
-         <el-input v-model="editUserForm.mobile"></el-input>
-       </el-form-item>
-     </el-form>
-     <span slot="footer" class="dialog-footer">
-       <el-button @click="editDialogVisible = false">取 消</el-button>
-       <el-button type="primary" @click="editUserInfo">确 定</el-button>
-     </span>
+      <el-form
+        :model="editUserForm"
+        :rules="editUserFormRules"
+        ref="editUserFormRef"
+        lable-width="70px"
+      >
+        <el-form-item lable="用户名">
+          <el-input v-model="editUserForm.username" disabled></el-input>
+        </el-form-item>
+        <el-form-item lable="邮箱" prop="email">
+          <el-input v-model="editUserForm.email"></el-input>
+        </el-form-item>
+        <el-form-item lable="手机号" prop="mobile">
+          <el-input v-model="editUserForm.mobile"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="editUserInfo">确 定</el-button>
+      </span>
     </el-dialog>
 
     <!-- 分配角色对话框 -->
@@ -131,7 +151,7 @@
             filterable
             allow-create
             default-first-option
-            placeholder="请选择文章标签"
+            placeholder="请选择职位"
           >
             <el-option
               v-for="item in rolesLsit"
@@ -286,7 +306,7 @@ export default {
     addDialogClosed() {
       this.$refs.addUserFormRef.resetFields()
     },
-    
+
     // 添加用户
     addUser() {
       // 提交请求前，表单预验证
@@ -305,7 +325,6 @@ export default {
       })
     },
 
-
     // 编辑用户信息
     async showEditDialog(id) {
       const { data: res } = await this.$http.get('users/' + id)
@@ -316,12 +335,10 @@ export default {
       this.editDialogVisible = true
     },
 
-
     // 监听修改用户对话框的关闭事件
     editDialogClosed() {
       this.$refs.editUserFormRef.resetFields()
     },
-
 
     // 修改用户信息
     editUserInfo() {
@@ -383,11 +400,12 @@ export default {
       if (!this.selectRoleId) {
         return this.$message.error('请选择要分配的角色')
       }
-      const {
-        data: res,
-      } = await this.$http.put(`users/${this.userInfo.id}/role`, {
-        rid: this.selectRoleId,
-      })
+      const { data: res } = await this.$http.put(
+        `users/${this.userInfo.id}/role`,
+        {
+          rid: this.selectRoleId,
+        }
+      )
       if (res.meta.status !== 200) {
         return this.$message.error('更新用户角色失败！')
       }
