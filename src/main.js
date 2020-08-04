@@ -20,6 +20,10 @@ axios.interceptors.request.use(config=>{
 import "./assets/css/global.css"
 Vue.config.productionTip = false
 
+import TreeTable from 'vue-table-with-tree-grid'
+
+Vue.component('tree-table',TreeTable)
+
 new Vue({
   router,
   store,
