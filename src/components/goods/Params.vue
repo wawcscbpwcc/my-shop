@@ -21,6 +21,7 @@
             :options="cateList"
             :props="cateProps"
             @change="handleChange"
+            size="mini"
           ></el-cascader>
         </el-col>
       </el-row>
